@@ -1,6 +1,6 @@
-# ESP32-C3 Azure Service Bus Long Poll
+# ESP32 Azure Service Bus Long Poll
 
-PlatformIO project for a generic ESP32-C3 board with:
+PlatformIO project for ESP32 boards with:
 
 - WiFi + Azure Service Bus long polling
 - OTA updates using espota
@@ -10,11 +10,14 @@ PlatformIO project for a generic ESP32-C3 board with:
 ## Requirements
 
 - VS Code with PlatformIO extension
-- Generic ESP32-C3 board (for example ESP32-C3 SuperMini)
+- ESP32-C3 board (for example ESP32-C3 SuperMini)
+- ESP32-WROOM board (for example ESP32 Dev Module)
 - WiFi network access
 - Azure Service Bus topic + subscription
 
 ## Build And Upload
+
+### ESP32-C3
 
 USB upload:
 
@@ -33,6 +36,32 @@ If mDNS host resolution fails, upload OTA by IP:
 ```powershell
 pio run -e seeed_xiao_esp32c3_ota -t upload --upload-port 192.168.x.x
 ```
+
+### ESP32-WROOM
+
+USB upload:
+
+```powershell
+pio run -e esp32_wroom_32 -t upload
+```
+
+OTA upload:
+
+```powershell
+pio run -e esp32_wroom_32_ota -t upload
+```
+
+If mDNS host resolution fails, upload OTA by IP:
+
+```powershell
+pio run -e esp32_wroom_32_ota -t upload --upload-port 192.168.x.x
+```
+
+### Notes
+
+- OTA hostname is `perry-platypus.local`.
+- Shared trigger pin default is GPIO21 for both board targets.
+- For OTA, use upload only (do not combine upload and monitor in one command).
 
 ## Secrets Handling
 
