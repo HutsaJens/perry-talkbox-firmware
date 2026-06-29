@@ -1,0 +1,65 @@
+# ESP32-C3 Azure Service Bus Long Poll
+
+PlatformIO project for a generic ESP32-C3 board with:
+
+- WiFi + Azure Service Bus long polling
+- OTA updates using espota
+- Telnet log mirror
+- ISD1820 trigger pulse output
+
+## Requirements
+
+- VS Code with PlatformIO extension
+- Generic ESP32-C3 board (for example ESP32-C3 SuperMini)
+- WiFi network access
+- Azure Service Bus topic + subscription
+
+## Build And Upload
+
+USB upload:
+
+```powershell
+pio run -e seeed_xiao_esp32c3 -t upload
+```
+
+OTA upload:
+
+```powershell
+pio run -e seeed_xiao_esp32c3_ota -t upload
+```
+
+If mDNS host resolution fails, upload OTA by IP:
+
+```powershell
+pio run -e seeed_xiao_esp32c3_ota -t upload --upload-port 192.168.x.x
+```
+
+## Secrets Handling
+
+This project reads local credentials and tokens from src/secrets.h.
+
+- src/secrets.h is intentionally ignored by git.
+- Never commit real WiFi credentials or SAS tokens.
+- Rotate tokens immediately if they are ever exposed.
+
+Example src/secrets.h template:
+
+```cpp
+#pragma once
+#include <Arduino.h>
+
+const char *ssid = "YOUR_WIFI_SSID";
+const char *password = "YOUR_WIFI_PASSWORD";
+
+const String sbNamespace = "YOUR_SERVICEBUS_NAMESPACE";
+const String topicName = "YOUR_TOPIC";
+const String subscriptionName = "YOUR_SUBSCRIPTION";
+
+// Example format: SharedAccessSignature sr=...&sig=...&se=...&skn=...
+const String sasToken = "YOUR_SAS_TOKEN";
+```
+
+## Formatting
+
+- Prettier configuration is provided for project text/config files.
+- C/C++ files should be formatted with clang-format.

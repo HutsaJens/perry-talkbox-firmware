@@ -1,0 +1,14 @@
+# Build outputs
+.pio/
+
+# VS Code workspace artifacts
+.vscode/
+
+# Embedded C/C++ sources are formatted with clang-format, not Prettier
+src/**/*.c
+src/**/*.cpp
+src/**/*.h
+include/**/*.h
+
+# Secrets
+src/secrets.h
