@@ -4,3 +4,25 @@
 .vscode/launch.json
 .vscode/ipch
 src/secrets.h
+
+# Visual Studio workspace artifacts (can appear under src/.vs)
+.vs/
+src/.vs/
+*.suo
+*.user
+*.VC.db
+*.VC.opendb
+*.vsidx
+*.wsuo
+
+# C/C++ build and debug artifacts
+*.o
+*.obj
+*.elf
+*.bin
+*.map
+
+# Logs and OS metadata
+*.log
+.DS_Store
+Thumbs.db
