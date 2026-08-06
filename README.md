@@ -65,11 +65,12 @@ pio run -e esp32_wroom_32_ota -t upload --upload-port 192.168.x.x
 
 ## Secrets Handling
 
-This project reads local credentials and tokens from src/secrets.h.
+This project reads local credentials from src/secrets.h and generates short-lived Service Bus SAS tokens on the ESP32.
 
 - src/secrets.h is intentionally ignored by git.
-- Never commit real WiFi credentials or SAS tokens.
-- Rotate tokens immediately if they are ever exposed.
+- Never commit real WiFi credentials or Service Bus connection strings.
+- Use a dedicated Service Bus policy with only `Listen` permission.
+- Rotate the shared access key immediately if the connection string is ever exposed.
 
 Example src/secrets.h template:
 
@@ -80,13 +81,16 @@ Example src/secrets.h template:
 const char *ssid = "YOUR_WIFI_SSID";
 const char *password = "YOUR_WIFI_PASSWORD";
 
-const String sbNamespace = "YOUR_SERVICEBUS_NAMESPACE";
+const String serviceBusConnectionString =
+  "Endpoint=sb://YOUR_NAMESPACE.servicebus.windows.net/;"
+  "SharedAccessKeyName=YOUR_LISTEN_POLICY;"
+  "SharedAccessKey=YOUR_SHARED_ACCESS_KEY";
+
 const String topicName = "YOUR_TOPIC";
 const String subscriptionName = "YOUR_SUBSCRIPTION";
-
-// Example format: SharedAccessSignature sr=...&sig=...&se=...&skn=...
-const String sasToken = "YOUR_SAS_TOKEN";
 ```
+
+The device synchronizes its UTC clock with SNTP, refreshes it hourly, and refuses to create SAS tokens if no successful synchronization has occurred for six hours.
 
 ## Formatting
 

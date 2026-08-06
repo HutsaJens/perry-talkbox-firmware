@@ -21,6 +21,13 @@ void setup() {
 
   wifi_manager::begin(ssid, password, APP_WIFI_CONNECT_TIMEOUT_MS, APP_WIFI_RETRY_INTERVAL_MS);
 
+  servicebus_poller::beginTimeSync(
+    APP_SNTP_SERVER_1,
+    APP_SNTP_SERVER_2,
+    APP_SNTP_SYNC_INTERVAL_MS,
+    APP_SNTP_MAX_AGE_MS
+  );
+
   telnet_logger::begin(APP_TELNET_PORT);
   logging::setSecondarySink(telnet_logger::write);
 
@@ -55,10 +62,10 @@ void azurePollTask(void *pvParameters) {
       logging::logln("Opening long polling connection...");
 
       PollResponse response = servicebus_poller::receiveMessageLongPoll(
-        sbNamespace,
+        serviceBusConnectionString,
         topicName,
         subscriptionName,
-        sasToken,
+        APP_SAS_TOKEN_TTL_SECONDS,
         APP_POLLING_TIMEOUT_SECONDS,
         APP_HTTP_TIMEOUT_MS
       );

@@ -18,11 +18,18 @@ struct PollResponse {
 };
 
 namespace servicebus_poller {
+void beginTimeSync(
+  const char *server1,
+  const char *server2,
+  uint32_t syncIntervalMs,
+  uint32_t maximumSyncAgeMs
+);
+
 PollResponse receiveMessageLongPoll(
-  const String &sbNamespace,
+  const String &connectionString,
   const String &topicName,
   const String &subscriptionName,
-  const String &sasToken,
+  uint32_t sasTokenTtlSeconds,
   int pollingTimeoutSeconds,
   int httpTimeoutMs
 );

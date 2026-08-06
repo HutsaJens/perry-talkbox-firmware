@@ -15,6 +15,12 @@ static constexpr uint32_t APP_WIFI_RETRY_INTERVAL_MS = 5000;
 
 static constexpr int APP_POLLING_TIMEOUT_SECONDS = 60;
 static constexpr int APP_HTTP_TIMEOUT_MS = (APP_POLLING_TIMEOUT_SECONDS + 5) * 1000;
+static constexpr uint32_t APP_SAS_TOKEN_TTL_SECONDS = 5 * 60;
+
+static constexpr uint32_t APP_SNTP_SYNC_INTERVAL_MS = 60 * 60 * 1000;
+static constexpr uint32_t APP_SNTP_MAX_AGE_MS = 6 * 60 * 60 * 1000;
+static constexpr const char *APP_SNTP_SERVER_1 = "pool.ntp.org";
+static constexpr const char *APP_SNTP_SERVER_2 = "time.nist.gov";
 
 static constexpr uint32_t APP_MAIN_LOOP_DELAY_MS = 10;
 static constexpr uint32_t APP_POLL_TASK_IDLE_DELAY_MS = 100;
